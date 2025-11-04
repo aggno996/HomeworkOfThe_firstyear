@@ -1,0 +1,42 @@
+#include<stdio.h>
+char translate(char a);
+void change(int *p , int *k);
+int main() 
+{ 
+    char c;
+    while((c=getchar())!=EOF){
+        putchar(translate(c);
+    }
+}
+char translate(char a){
+    int x;
+    x=0xc0&a;
+    x=x>>6;
+    int y[6];
+    y[0]=1&a;
+    y[1]=(0x2&a)>>1;
+    y[2]=(0x4&a)>>2;
+    y[3]=(0x8&a)>>3;
+    y[4]=(0x10&a)>>4;
+    y[5]=(0x20&a)>>5;
+    change(&y[0],&y[1]);
+    change(&y[2],&y[3]);
+    change(&y[4],&y[5]);
+    int m;
+    switch(x){
+        case 0:m=y[0]+2*y[1]+4*y[2]+8*y[3]+16*y[4]+32*y[5];break;
+        case 1:m=y[5]+2*y[0]+4*y[1]+8*y[2]+16*y[3]+32*y[4];break;
+        case 2:m=y[4]+2*y[5]+4*y[0]+8*y[1]+16*y[2]+32*y[3];break;
+        case 3:m=y[3]+2*y[4]+4*y[5]+8*y[0]+16*y[1]+32*y[2];break;
+    }
+    m = m + x*64;
+    char n = (char)m;
+    return n;
+}
+void change(int *p , int *k){
+    int storage;
+    storage = *p;
+    *p = *k;
+    *k = storage;
+}
+}
