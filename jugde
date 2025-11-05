@@ -1,0 +1,17 @@
+#include <stdio.h>
+void test();
+int num;
+int main(){
+    int num = 10;
+    {
+        int num = 20;
+        printf("%d\n",num);
+    }
+    test();
+    printf("%d\n",num);
+}
+void test(){
+    printf("%d\n",num);
+    num = 998;
+    printf("%d\n",num);
+}
