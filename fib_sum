@@ -1,0 +1,45 @@
+#include<stdio.h>
+
+long long fib(int x, long long memo[]);
+long long fibonacci_sum(int n);
+
+int main(){
+    int a;
+    scanf("%d", &a);
+    long long result = fibonacci_sum(a);
+    printf("%lld", result);
+    return 0;
+}
+
+long long fibonacci_sum(int n) {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    
+    // 创建记忆化数组，初始化为-1表示未计算
+    long long memo[n + 1];
+    for (int i = 0; i <= n; i++) {
+        memo[i] = -1;
+    }
+    
+    // 初始化前两个斐波那契数
+    memo[0] = 0;
+    memo[1] = 1;
+    memo[2] = 1;
+    
+    long long sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += fib(i, memo);
+    }
+    return sum;
+}
+
+long long fib(int x, long long memo[]) {
+    // 如果已经计算过，直接返回结果
+    if (memo[x] != -1) {
+        return memo[x];
+    }
+    
+    // 否则计算并存储结果
+    memo[x] = fib(x - 1, memo) + fib(x - 2, memo);
+    return memo[x];
+}
