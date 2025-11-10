@@ -1,0 +1,34 @@
+#include<stdio.h>
+void meisen(int x);
+int sushu(int y);
+int ercimi(int z);
+int main(){
+    long long int m ;
+    scanf("%d",&m);
+    meisen(m);
+}
+void meisen(int x){
+    for(int u = 2 ; ercimi(u) - 1 <= x ; u++){
+        if(sushu(u)&&sushu(ercimi(u)-1)){
+            printf("M(%d)=%d\n",u,ercimi(u)-1);
+        }
+    }
+}
+int sushu(int y){
+    int gen = 2 ; 
+    int judge = 1 ;
+    for(;gen*gen<y;gen++){
+        if(y%gen==0){
+            judge = 0 ;
+            break;
+        }
+    }
+    return judge ;
+}
+int ercimi(int z){
+    int result = 1 ;
+    for(int k = 0 ; k < z ; k++){
+        result = result * 2 ;
+    }
+    return result;
+}
