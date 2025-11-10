@@ -17,7 +17,7 @@ void meisen(int x){
 int sushu(int y){
     int gen = 2 ; 
     int judge = 1 ;
-    for(;gen*gen<y;gen++){
+    for(;gen*gen<=y;gen++){
         if(y%gen==0){
             judge = 0 ;
             break;
