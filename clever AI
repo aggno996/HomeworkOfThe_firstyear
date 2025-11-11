@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+/* 返回 -1 表示该 5 位数内部有重复数字
+   否则返回 mask，mask 的第 d 位为 1 表示数字 d 出现过
+   注意：这里按 5 位处理（含前导 0），例如 06132 会把 0 计入 */
+int mask5(int v) {
+    int mask = 0;
+    for (int i = 0; i < 5; i++) {
+        int d = v % 10;
+        if (mask & (1 << d)) return -1; // 重复
+        mask |= (1 << d);
+        v /= 10;
+    }
+    return mask;
+}
+
+int main(void) {
+    int x;
+    if (scanf("%d", &x) != 1) return 0;
+
+    int full = (1 << 10) - 1; // 所有 0..9 位都为 1
+
+    // 枚举分母 den（允许前导0），使 num = den * x 不超过 5 位
+    int max_den = 99999 / x;
+    for (int den = 0; den <= max_den; den++) {
+        int num = den * x; // 乘积也是 0..99999 的整数
+
+        // 计算两端各自的五位掩码（若内部重复返回 -1）
+        int m_den = mask5(den);
+        if (m_den == -1) continue;
+        int m_num = mask5(num);
+        if (m_num == -1) continue;
+
+        // 两部分无重叠且恰好覆盖 0..9
+        if ((m_den & m_num) == 0 && (m_den | m_num) == full) {
+            printf("%05d/%05d=%d\n", num, den, x);
+        }
+    }
+
+    return 0;
+}
