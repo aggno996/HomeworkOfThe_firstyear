@@ -1,0 +1,55 @@
+#include<stdio.h>
+int count = 1;
+int maze[100][100];
+int solution[100][100];
+int n, m;
+int next[4][2] = {
+    {1,0},{0,1},{-1,0},{0,-1}
+};
+void dfs(int hang, int lie);
+void prt(void);
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &maze[i][j]);
+        }
+    }
+    solution[0][0] = 1;
+    dfs(0, 0);
+    return 0;
+}
+void dfs(int hang, int lie) {
+    if (hang == n - 1 && lie == m - 1) {
+        solution[hang][lie] = 1;
+        prt();
+        solution[hang][lie] = 0;
+        return;
+    }
+    for (int k = 0; k < 4; k++) {
+         hang = hang + next[k][0];
+         lie = lie + next[k][1];
+        if (hang<=n-1&&hang>=0&&lie<=m-1&&lie>=0&&(!solution[hang][lie])&&maze[hang][lie]==1) {
+            solution[hang][lie] = 1;
+            dfs(hang,lie);
+            solution[hang][lie] = 0;
+        }
+         hang = hang - next[k][0];
+         lie = lie - next[k][1];
+    }
+    return;
+}
+void prt(void) {
+    printf("%d\n", count);
+    count++;
+    for (int a = 0; a < n; a++) {
+        for (int b = 0; b < m; b++) {
+            if (b == m - 1) {
+                printf("%d\n", solution[a][b]);
+            }
+            else {
+                printf("%d ", solution[a][b]);
+            }
+        }
+    }
+}
