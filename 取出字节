@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int num;
+    scanf("%d", &num);
+
+    // 将 int 指针转换为 unsigned char 指针，便于按字节访问
+    unsigned char *p = (unsigned char *)&num;
+
+    // 由于平台是小端存储，高字节在内存高位（地址大）
+    // 但题目要求“从整形变量的高字节开始”，所以要从最后一个字节开始遍历
+    for (int i = sizeof(int) - 1; i >= 0; i--) {
+        // 取出当前字节
+        unsigned char byte = *(p + i);
+
+        // 获取高4位和低4位
+        unsigned char high = (byte >> 4) & 0x0F;
+        unsigned char low = byte & 0x0F;
+
+        // 输出为小写十六进制字符
+        printf("%c %c", 
+               high < 10 ? high + '0' : high - 10 + 'a',
+               low < 10 ? low + '0' : low - 10 + 'a');
+
+        // 字节间用空格分隔（最后一个字节后不加空格）
+        if (i > 0) {
+            printf(" ");
+        }
+    }
+    printf("\\n");
+
+    return 0;
+}
