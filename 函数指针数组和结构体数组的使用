@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int sum = 0;
+struct student {
+	char id[30];
+	char name[20];
+	int score[4];
+};
+typedef struct student stu;
+void finish(stu* stus) {
+	return;
+}
+void putin(stu* stus) {
+	int add;
+	scanf("%d", &add);
+	sum += add;
+	for (int i = sum - add; i < sum; i++) {
+		scanf("%s %s", stus[i].id, stus[i].name);
+		for (int j = 0; j < 4; j++) {
+			scanf("%d", &stus[i].score[j]);
+		}
+	}
+}
+void putout(stu* stus) {
+	for(int i =0;i<sum;i++){
+		printf("%s %s",stus[i].id,stus[i].name);
+		for(int j=0;j<4;j++){
+			printf(" %d",stus[i].score[j]);
+		}
+		printf("\n");
+	}
+}
+void revise(stu* stus) {
+	char idd[30];
+	scanf("%s", idd);
+	for(int i = 0 ; i<sum;i++){
+		if(strcmp(stus[i].id,idd)==0){
+			int subscript, newscore;
+			scanf("%d %d", &subscript, &newscore);
+			stus[i].score[subscript-1] = newscore;
+			break;
+		}
+	}
+}
+void average(stu* stus) {
+		for(int i =0;i<sum;i++){
+		printf("%s %s",stus[i].id,stus[i].name);
+		int sum_ = 0;
+		for(int j=0;j<4;j++){
+			sum_ += stus[i].score[j];
+		}
+		float avg = sum_ / 4.0;
+		printf(" %.2f\n",avg);
+	}
+}
+void putout_grade(stu* stus) {
+	for(int i =0;i<sum;i++){
+		printf("%s %s",stus[i].id,stus[i].name);
+		int sum_ = 0;
+		for(int j=0;j<4;j++){
+			sum_ += stus[i].score[j];
+		}
+		float avg = sum_ / 4.0;
+		printf(" %d %.2f\n",sum_,avg);
+	}
+}
+void (*op[6])(stu*) = { finish,putin,putout,revise,average,putout_grade };
+int main() {
+	int order;
+	stu stus[10];
+	while (1) {
+		scanf("%d", &order);
+		if (order == 0) {
+			break;
+		}
+		else {
+			op[order](stus);
+		}
+
+	}
+}
