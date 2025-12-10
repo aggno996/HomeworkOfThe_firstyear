@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+char former[100];
+int count = 0;
+struct calculate {
+	char c;
+	struct calculate* next;
+};
+typedef struct calculate cal;
+struct last {
+	char c;
+	int empty;
+};
+typedef struct last las;
+int result = 0;
+cal* head = NULL;
+void putin(void);
+void calculate(int step);
+void transform(void);
+las last(void);
+int main() {
+	putin();
+	transform();
+	calculate(0);
+	printf("%d", count);
+}
+void putin(void) {
+	char ch;
+	cal* p1, * p2;
+	while (1) {
+		ch = getchar();
+		if (ch == '-') {
+			ch = getchar();
+			ch -= 48;
+		}
+		if (ch == ' ') {
+			continue;
+		}
+		else {
+			if (ch == '\n') {
+				break;
+			}
+			p1 = (cal*)malloc(sizeof(cal));
+			p1->c = ch;
+			p1->next = NULL;
+			if (head == NULL) {
+				head = p1;
+			}
+			else {
+				p2 = head;
+				while (p2->next != NULL) {
+					p2 = p2->next;
+				}
+				p2->next = p1;
+			}
+		}
+	}
+}
+las last(void) {
+	char last;
+	cal* p = head, * pv = NULL;
+	if (head->next == NULL) {
+		las x = { head->c,1 };
+		return x;
+	}
+	while (1) {
+		if(p->next==NULL){
+			last = p->c;
+			pv->next = NULL;
+			break;
+		}
+		pv = p;
+		p = p->next;
+
+	}
+	las x = { last,0 };
+	return x;
+}
+void transform(void) {
+	while(1){
+		las x = last();
+		if (x.empty == 1) {
+			former[count] = x.c;
+			break;
+		}
+		former[count] = x.c;
+		count++;
+	}
+}
+void calculate(int step) {
+	for (int i = 0; i < count; i++) {
+		printf("%c", former[i]);
+	}
+}
