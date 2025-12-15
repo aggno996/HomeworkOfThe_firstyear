@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define SIZE 1024
+
+double stack[SIZE];
+double *top = stack;
+
+void push(int x) {
+    if (top == stack + SIZE) {
+        printf("stack is full");
+        exit(EXIT_FAILURE);
+    }
+    *top++ = x;
+}
+
+double pop(void) {
+    if (top == stack) {
+        printf("stack is empty");
+        exit(EXIT_FAILURE);
+    }
+    return *--top;
+}
+
+int main() {
+    char token[SIZE];
+
+
+    while (scanf("%s", token) != EOF) {
+        if (isdigit(token[0]) || (token[0] == '-' && isdigit(token[1]))) {
+            push(atof(token));
+        } else {
+            switch (token[0]) {
+                case '+':
+                    push(pop() + pop());
+                    break;
+                case '-':
+                    if (top - stack < 2) {
+                        printf("Invalid expression: insufficient operands\n");
+                        return -1;
+                    }
+                    double x = pop();
+                    push(pop() - x);
+                    break;
+                case '*':
+                    push(pop() * pop());
+                    break;
+                case '/':
+                    x = pop();
+                    if (x == 0) {
+                        printf("Division by zero error\n");
+                        return -1;
+                    }
+                    push(pop() / x);
+                    break;
+                default:
+                    printf("unknown operator\n");
+                    return -1;
+            }
+        }
+    }
+
+    if (top - stack != 1) {
+        printf("Invalid expression: too many operands\n");
+        return -1;
+    }
+
+    printf("%.0f\n", pop());
+
+    return 0;
+}
