@@ -17,3 +17,29 @@ int main(int argc, char* argv[])
 	fclose(fp);                        /* 关闭filename */ 
 	return 0;
 }
+#include<stdio.h>
+// #include<stdlib.h>
+// int main(){
+// 	FILE *fp1 , *fp2;
+//     char filename[100];
+//     scanf("%s",filename);
+//     fp1 = fopen(filename,"r");
+//     fp2 = fopen("matrix.out","w");
+//     int n , m ;
+//     fscanf(fp1,"%d%d",&n,&m);
+//     int element[n][m];
+//     for(int i = 0 ; i < n ; i++){
+//         for(int  j = 0 ; j < m ; j++){
+//             fscanf(fp1,"%d",&element[i][j]);
+//         }
+//     }
+//         for(int i = m-1 ; i >= 0 ; i--){
+//             for(int  j = 0 ; j < n ; j++){
+//                 if(j==n-1){fprintf(fp2,"%d",element[j][i]);}
+//                 else{fprintf(fp2,"%d ",element[j][i]);}
+//             }
+//             fprintf(fp2,"\n");
+//         }
+//         fclose(fp1);
+//         fclose(fp2);
+// }
